@@ -21,8 +21,10 @@ int main() {
     std::cout << "=====Teст на открытие файла=====" << std::endl;
     view->onInportClick("Path/Test2");
     std::cout << "=====Teст на создание фигуры=====" << std::endl;
-    view->createShape(ShapeType::Square, std::make_pair(0, 0));
+    view->createSquare(std::make_pair(0, 0), 10);
+    view->createTriangle(std::make_pair(1, 1), 10, 20, 20);
     std::cout << "=====Teст на удаление фигуры=====" << std::endl;
-    view->removeShape(ShapeType::Square, std::make_pair(0, 0));
+    view->removeShape(std::make_pair(0, 0));
+    std::cout << "=====Закрываюсь=====" << std::endl;
     return 0;
 }

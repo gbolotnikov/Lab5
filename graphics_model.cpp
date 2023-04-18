@@ -40,18 +40,34 @@ void Model::fsave(size_t pageId, std::string_view path) {
     }
 }
 
-void Model::createShape(size_t pageId, ShapeType shape, std::pair<size_t, size_t> coordinate) {
+void Model::createSquare(size_t pageId, std::pair<size_t, size_t> coordinate, size_t params) {
     auto page = _pages.find(pageId);
     if (page != _pages.end()) {
-        page->second->create(shape, coordinate);
+        page->second->createSquare(coordinate, params);
         notify(std::make_pair(pageId, _pages[pageId].get()));
     }
-}   
+}
 
-void Model::removeShape(size_t pageId, ShapeType shape, std::pair<size_t, size_t> coordinate) {
+void Model::createСircle(size_t pageId, std::pair<size_t, size_t> coordinate, size_t params) {
     auto page = _pages.find(pageId);
     if (page != _pages.end()) {
-        page->second->remove(shape, coordinate);
+        page->second->createСircle(coordinate, params);
+        notify(std::make_pair(pageId, _pages[pageId].get()));
+    }
+}
+
+void Model::createTriangle(size_t pageId, std::pair<size_t, size_t> coordinate, size_t sizeA, size_t sizeB, size_t sizeC) {
+    auto page = _pages.find(pageId);
+    if (page != _pages.end()) {
+        page->second->createTriangle(coordinate, sizeA, sizeB, sizeC);
+        notify(std::make_pair(pageId, _pages[pageId].get()));
+    }
+}
+
+void Model::removeShape(size_t pageId, std::pair<size_t, size_t> coordinate) {
+    auto page = _pages.find(pageId);
+    if (page != _pages.end()) {
+        page->second->remove(coordinate);
         notify(std::make_pair(pageId, _pages[pageId].get()));
     }
 } 

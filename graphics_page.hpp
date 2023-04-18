@@ -13,8 +13,10 @@ public:
     Page(std::string_view name); 
     const Shapes& data() const override;
     std::string name() const override;
-    void create(ShapeType shape, std::pair<size_t, size_t> coordinate) override;
-    void remove(ShapeType shape, std::pair<size_t, size_t> coordinate) override;
+    void createSquare(std::pair<size_t, size_t> coordinate, size_t params) override;
+    void createСircle(std::pair<size_t, size_t> coordinate, size_t params) override;
+    void createTriangle(std::pair<size_t, size_t> coordinate, size_t sizeA, size_t sizeB, size_t sizeC) override;
+    void remove(std::pair<size_t, size_t> coordinate) override;
     bool readFrom(const std::string_view& path) override;
     void writeTo(const std::string_view& path) override;
 };

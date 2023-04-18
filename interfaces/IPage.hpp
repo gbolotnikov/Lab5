@@ -16,23 +16,26 @@ std::ostream& operator<<(std::ostream& os, ShapeType shape);
 
 class IShape {
 public:
-    ~IShape() = default;
+    virtual ~IShape() = default;
     virtual void draw() = 0;
 };
 
 class IPageData {
 public:
-    using Shapes = std::map<std::pair<std::pair<size_t, size_t>, ShapeType>, std::unique_ptr<IShape>>; 
-    ~IPageData() = default;
+    using Shapes = std::map<std::pair<size_t, size_t>, std::unique_ptr<IShape>>; 
+    virtual ~IPageData() = default;
     virtual const Shapes& data() const = 0;
     virtual std::string name() const = 0;
 };
 
 class IPage: public IPageData {
 public:    
-    ~IPage() = default;
-    void virtual create(ShapeType shape, std::pair<size_t, size_t> coordinate) = 0;
-    void virtual remove(ShapeType shape, std::pair<size_t, size_t> coordinate) = 0;
+    virtual ~IPage() = default;
+    void virtual createSquare(std::pair<size_t, size_t> coordinate, size_t params) = 0;
+    void virtual createСircle(std::pair<size_t, size_t> coordinate, size_t params) = 0;
+    void virtual createTriangle(std::pair<size_t, size_t> coordinate, size_t sizeA, size_t sizeB, size_t sizeC) = 0;
+
+    void virtual remove(std::pair<size_t, size_t> coordinate) = 0;
     bool virtual readFrom(const std::string_view& path) = 0;
     void virtual writeTo(const std::string_view& path) = 0;
 };

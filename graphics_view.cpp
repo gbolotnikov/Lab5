@@ -58,24 +58,37 @@ void View::onExportClick(std::string_view path) {
     }
 }
 
-void View::createShape(ShapeType shape, std::pair<size_t, size_t> coordinate) {
+
+void View::createSquare(std::pair<size_t, size_t> coordinate, size_t width) {
     auto pageId = _pageId[0];
-    std::cout << "Создаем фигуру " << shape << std::endl;
     auto ptr = _subscriber.lock();
     if (ptr) {
-        ptr->createShape(pageId, shape, coordinate);
+        ptr->createSquare(pageId, coordinate, width);
     }
 }
 
-void View::removeShape(ShapeType shape, std::pair<size_t, size_t> coordinate) {
+void View::createСircle(std::pair<size_t, size_t> coordinate, size_t radius) {
     auto pageId = _pageId[0];
-    std::cout << "Удаляем фигуру " << shape << std::endl;
     auto ptr = _subscriber.lock();
     if (ptr) {
-        ptr->removeShape(pageId, shape, coordinate);
+        ptr->createСircle(pageId, coordinate, radius);
     }
 }
 
+void View::createTriangle(std::pair<size_t, size_t> coordinate, size_t sizeA, size_t sizeB, size_t sizeC) {
+    auto pageId = _pageId[0];
+    auto ptr = _subscriber.lock();
+    if (ptr) {
+        ptr->createTriangle(pageId, coordinate, sizeA, sizeB, sizeC);
+    }
+}
 
+void View::removeShape(std::pair<size_t, size_t> coordinate) {
+    auto pageId = _pageId[0];
+    auto ptr = _subscriber.lock();
+    if (ptr) {
+        ptr->removeShape(pageId, coordinate);
+    }
+}
 
 

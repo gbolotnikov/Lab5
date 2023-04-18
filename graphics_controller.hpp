@@ -36,8 +36,10 @@ public:
     void create(std::string_view path) const override;
     void inportFrom(std::string_view name) const override;
     void exportTo(size_t pageId, std::string_view path) const override;
-    void createShape(size_t pageId, ShapeType shape, std::pair<size_t, size_t> coordinate) const override;
-    void removeShape(size_t pageId, ShapeType shape, std::pair<size_t, size_t> coordinate) const override;
+    void createSquare(size_t pageId, std::pair<size_t, size_t> coordinate, size_t params) const override;
+    void createСircle(size_t pageId, std::pair<size_t, size_t> coordinate, size_t params) const override;
+    void createTriangle(size_t pageId, std::pair<size_t, size_t> coordinate, size_t sizeA, size_t sizeB, size_t sizeC) const override;
+    void removeShape(size_t pageId, std::pair<size_t, size_t> coordinate) const override;
 
 
 };

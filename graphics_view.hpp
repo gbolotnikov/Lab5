@@ -12,8 +12,13 @@ public:
     void onCreateClick(std::string_view name);
     void onInportClick(std::string_view path);
     void onExportClick(std::string_view path);
-    void createShape(ShapeType shape, std::pair<size_t, size_t> coordinate);
-    void removeShape(ShapeType shape, std::pair<size_t, size_t> coordinate);
+    
+    void createSquare(std::pair<size_t, size_t> coordinate, size_t width);
+    void createСircle(std::pair<size_t, size_t> coordinate, size_t radius);
+    void createTriangle(std::pair<size_t, size_t> coordinate, size_t sizeA, size_t sizeB, size_t sizeC);
+
+
+    void removeShape(std::pair<size_t, size_t> coordinate);
 
     static std::shared_ptr<View> create() {
         auto ptr = std::shared_ptr<View>(new View);

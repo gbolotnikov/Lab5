@@ -20,9 +20,13 @@ public:
 
     void subscribe(const std::shared_ptr<ModelSubscriber>& sub) override;
 
-    void createShape(size_t pageId, ShapeType shape, std::pair<size_t, size_t> coordinate) override;
+    void createSquare(size_t pageId, std::pair<size_t, size_t> coordinate, size_t params) override;
 
-    void removeShape(size_t pageId, ShapeType shape, std::pair<size_t, size_t> coordinate) override;
+    void createСircle(size_t pageId, std::pair<size_t, size_t> coordinate, size_t params) override;
+
+    void createTriangle(size_t pageId, std::pair<size_t, size_t> coordinate, size_t sizeA, size_t sizeB, size_t sizeC) override;
+
+    void removeShape(size_t pageId, std::pair<size_t, size_t> coordinate) override;
 
     static std::shared_ptr<Model> create() {
         auto ptr = std::shared_ptr<Model>(new Model);

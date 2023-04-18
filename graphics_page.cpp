@@ -1,23 +1,6 @@
+#include <iostream>
 #include "graphics_page.hpp"
 #include "graphics_shapes.hpp"
-
-std::ostream& operator<<(std::ostream& os, ShapeType shape) {
-    switch(shape) {
-        case ShapeType::Square:
-            os << "Квадрат";
-            break;
-        case ShapeType::Сircle:
-            os << "Круг";
-            break;
-        case ShapeType::Triangle:
-            os << "Треугольник";
-            break;    
-        default:
-            os << "Неизвестно";
-            break;
-    }
-    return os;
-}
 
 Page::Page(std::string_view name):
     _name(name)
@@ -33,14 +16,23 @@ const Page::Shapes& Page::data() const {
     return _shapes;
 }
 
-void Page::create(ShapeType shape, std::pair<size_t, size_t> coordinate) {
-    auto pair = std::make_pair(std::make_pair(coordinate, shape), ShapeFactory::createShape(shape));
+void Page::createSquare(std::pair<size_t, size_t> coordinate, size_t params) {
+    auto pair = std::make_pair(coordinate, std::make_unique<Square>(params));
     _shapes.insert(std::move(pair));
 }
 
-void Page::remove(ShapeType shape, std::pair<size_t, size_t> coordinate) {
-    auto pairKey = std::make_pair(coordinate, shape);
-    auto sh = _shapes.find(pairKey);
+void Page::createСircle(std::pair<size_t, size_t> coordinate, size_t params) {
+    auto pair = std::make_pair(coordinate, std::make_unique<Сircle>(params));
+    _shapes.insert(std::move(pair));
+}
+
+void Page::createTriangle(std::pair<size_t, size_t> coordinate, size_t sizeA, size_t sizeB, size_t sizeC) {
+    auto pair = std::make_pair(coordinate, std::make_unique<Triangle>(sizeA, sizeB, sizeC));
+    _shapes.insert(std::move(pair));
+}
+
+void Page::remove(std::pair<size_t, size_t> coordinate) {
+    auto sh = _shapes.find(coordinate);
     if (sh != _shapes.end()) {
         _shapes.erase(sh);
     }
