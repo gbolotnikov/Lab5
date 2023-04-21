@@ -31,6 +31,7 @@ public:
 class IPage: public IPageData {
 public:    
     virtual ~IPage() = default;
+    void virtual save(std::string_view path) = 0;
     void virtual createSquare(std::pair<size_t, size_t> coordinate, size_t params) = 0;
     void virtual createСircle(std::pair<size_t, size_t> coordinate, size_t params) = 0;
     void virtual createTriangle(std::pair<size_t, size_t> coordinate, size_t sizeA, size_t sizeB, size_t sizeC) = 0;
@@ -38,6 +39,12 @@ public:
     void virtual remove(std::pair<size_t, size_t> coordinate) = 0;
     bool virtual readFrom(const std::string_view& path) = 0;
     void virtual writeTo(const std::string_view& path) = 0;
+};
+
+class INotifier {
+public:
+    virtual ~INotifier() = default;
+    virtual void notify(const IPageData*) = 0;
 };
 
 

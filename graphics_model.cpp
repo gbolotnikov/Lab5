@@ -7,7 +7,7 @@ void Model::subscribe(const std::shared_ptr<ModelSubscriber>& sub) {
     _subscriber = sub;
 }
 
-void Model::notify(std::pair<size_t, const IPageData*> pageData) {
+void Model::notify(const IPageData* pageData) {
     auto ptr = _subscriber.lock();
     if (ptr) {
         ptr->update(pageData);
@@ -15,62 +15,26 @@ void Model::notify(std::pair<size_t, const IPageData*> pageData) {
 }
 
 void Model::fcreate(std::string_view name) {
-    auto pair = std::make_pair(++pageId, std::make_unique<Page>(name));
-    _pages.insert(std::move(pair));
-    notify(std::make_pair(pageId, _pages[pageId].get()));
+    auto [it, wasInserted] = _pages.emplace(std::make_pair(std::string(name.data()), std::make_unique<Page>(name, *this)));
+    if (wasInserted) {
+        notify(it->second.get());
+    }
 }
 
 void Model::fopen(std::string_view path) {
     if (isExist(path)) {
-        auto pair = std::make_pair(++pageId, std::make_unique<Page>(fileName(path)));
-        if (pair.second->readFrom(path)) {
-            _pages.insert(std::move(pair));
-            notify(std::make_pair(pageId, _pages[pageId].get()));
-        }
+        auto name = fileName(path);
+        fcreate(name);
     }
 }
 
-void Model::fsave(size_t pageId, std::string_view path) {
-    if (isValid(path)) {
-        auto page = _pages.find(pageId);
-        if (page != _pages.end()) {
-            page->second->writeTo(path);          
-            notify(std::make_pair(pageId, _pages[pageId].get()));
-        }
+IPage* Model::page(std::string_view name) {
+    auto it = _pages.find(name.data());
+    if (it != _pages.end()) {
+        return it->second.get();
     }
+    return nullptr;
 }
-
-void Model::createSquare(size_t pageId, std::pair<size_t, size_t> coordinate, size_t params) {
-    auto page = _pages.find(pageId);
-    if (page != _pages.end()) {
-        page->second->createSquare(coordinate, params);
-        notify(std::make_pair(pageId, _pages[pageId].get()));
-    }
-}
-
-void Model::createСircle(size_t pageId, std::pair<size_t, size_t> coordinate, size_t params) {
-    auto page = _pages.find(pageId);
-    if (page != _pages.end()) {
-        page->second->createСircle(coordinate, params);
-        notify(std::make_pair(pageId, _pages[pageId].get()));
-    }
-}
-
-void Model::createTriangle(size_t pageId, std::pair<size_t, size_t> coordinate, size_t sizeA, size_t sizeB, size_t sizeC) {
-    auto page = _pages.find(pageId);
-    if (page != _pages.end()) {
-        page->second->createTriangle(coordinate, sizeA, sizeB, sizeC);
-        notify(std::make_pair(pageId, _pages[pageId].get()));
-    }
-}
-
-void Model::removeShape(size_t pageId, std::pair<size_t, size_t> coordinate) {
-    auto page = _pages.find(pageId);
-    if (page != _pages.end()) {
-        page->second->remove(coordinate);
-        notify(std::make_pair(pageId, _pages[pageId].get()));
-    }
-} 
 
 bool Model::isExist(std::string_view path) {
     return true;

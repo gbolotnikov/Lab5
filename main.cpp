@@ -17,14 +17,14 @@ int main() {
     std::cout << "=====Teст на создание файла=====" << std::endl;
     view->onCreateClick("Test1");
     std::cout << "=====Teст на сохранение файла=====" << std::endl;
-    view->onExportClick("Path/");
+    view->onExportClick("Test1", "Path/");
     std::cout << "=====Teст на открытие файла=====" << std::endl;
     view->onInportClick("Path/Test2");
     std::cout << "=====Teст на создание фигуры=====" << std::endl;
-    view->createSquare(std::make_pair(0, 0), 10);
-    view->createTriangle(std::make_pair(1, 1), 10, 20, 20);
+    view->createSquare("Test1", std::make_pair(0, 0), 10);
+    view->createTriangle("Test1", std::make_pair(1, 1), 10, 20, 20);
     std::cout << "=====Teст на удаление фигуры=====" << std::endl;
-    view->removeShape(std::make_pair(0, 0));
+    view->removeShape("Test1", std::make_pair(0, 0));
     std::cout << "=====Закрываюсь=====" << std::endl;
     return 0;
 }
